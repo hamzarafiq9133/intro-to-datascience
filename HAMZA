@@ -1,0 +1,44 @@
+NAME: DANIYAL SAEED
+
+# quotes_scraper.py
+
+# Import required libraries
+import requests
+# quotes_scraper.py
+# Import required libraries
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_quotes():
+    # URL to scrape
+    url = "http://quotes.toscrape.com"
+    
+    # Send HTTP GET request to the URL
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code != 200:
+        print("Failed to retrieve the page")
+        return
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find all the quote containers
+    quotes = soup.find_all("div", class_="quote")
+
+   print("Scraped Quotes:\n")
+
+    # Loop through each quote container
+    for i, quote in enumerate(quotes, 1):
+        # Extract the quote text
+        text = quote.find("span", class_="text").text
+        # Extract the author
+        author = quote.find("small", class_="author").text
+
+        # Print the quote and author
+        print(f"{i}. {text} — {author}")
+
+# Run the function
+if _name_ == "_main_":
+    scrape_quotes()
